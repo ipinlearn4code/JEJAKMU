@@ -134,11 +134,7 @@ p {
     padding: 8px 16px;
 }
 </style>
-
-
-
     
-
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -150,21 +146,21 @@ p {
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <h4 class="section-title">About Us</h4>
-                    <h1 class="display-5 mb-4">A Creative Architecture Agency For Your Dream Home</h1>
-                    <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <p class="mb-4">Stet no et lorem dolor et diam, amet duo ut dolore vero eos. No stet est diam rebum amet diam ipsum. Clita clita labore, dolor duo nonumy clita sit at, sed sit sanctus dolor eos.</p>
+                    <h4 class="section-title">Tentang Kami</h4>
+                    <h1 class="display-5 mb-4">Pengurus Cabang Nahdlatul Ulama</h1>
+                    <p><p>PCNU berkomitmen untuk membangun masyarakat yang berlandaskan pada nilai-nilai Ahlussunnah wal Jama’ah. Melalui berbagai program keagamaan, pendidikan, sosial, dan ekonomi, kami berupaya untuk memberikan manfaat nyata bagi umat.</p></p>
+                    <p class="mb-4">Dengan semangat kebersamaan, PCNU terus berperan aktif dalam meningkatkan kesejahteraan masyarakat serta memperkuat ukhuwah Islamiyah, wathoniyah, dan basyariyah. Kami percaya bahwa melalui kerja sama dan dedikasi, kita dapat membangun peradaban yang lebih baik.</p>
                     <div class="d-flex align-items-center mb-5">
                         <div class="d-flex flex-shrink-0 align-items-center justify-content-center border border-5 border-primary" style="width: 120px; height: 120px;">
                             <h1 class="display-1 mb-n2" data-toggle="counter-up">25</h1>
                         </div>
                         <div class="ps-4">
-                            <h3>Years</h3>
-                            <h3>Working</h3>
-                            <h3 class="mb-0">Experience</h3>
+                            <h3>Tahun</h3>
+                            <h3>Dedikasi</h3>
+                            <h3 class="mb-0">Untuk Umat</h3>
                         </div>
                     </div>
-                    <a class="btn btn-primary py-3 px-5" href="">Read More</a>
+                    <a class="btn btn-primary py-3 px-5" href="">Selengkapnya</a>
                 </div>
             </div>
         </div>
@@ -211,7 +207,7 @@ p {
 
 
  <!-- News Section Start -->
-<section class="py-1 bg-light">
+<!-- <section class="py-1 bg-light">
     <div class="container">
         <div class="text-center mb-3">
             <h6 class="text-primary fw-semibold">Latest News</h6>
@@ -247,7 +243,38 @@ p {
             </div>
         </div>
     </div>
+</section> -->
+<section class="py-1 bg-light">
+    <div class="container">
+        <div class="text-center mb-3">
+            <h6 class="text-primary fw-semibold">Latest News</h6>
+            <h3 class="fw-bold">Stay Updated</h3>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-2">
+            <?php if (! empty($posts) && is_array($posts)) : ?>
+                <?php foreach ($posts as $post) : ?>
+                    <div class="col">
+                        <div class="card border-0 shadow-sm rounded-pill h-100 news-card">
+                            <!-- <img src="<//?= esc($post['featured_image']) ?>" class="card-img-top rounded-top-pill" alt="<//?= esc($post['title']) ?>"> -->
+                            <img src="uploads/cover1.jpg" class="card-img-top rounded-top-pill" alt="<?= esc($post['title']) ?>">
+                            <div class="card-body">
+                                <h6 class="card-title fw-bold"><?= esc($post['title']) ?></h6>
+                                <p class="card-text text-muted small">
+                                    <?= esc(word_limiter($post['content'], 10)) ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col">
+                    <p>No posts available at the moment.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 </section>
+
 <!-- News Section End -->
 
 <style>
@@ -280,7 +307,7 @@ p {
         border-top-right-radius: 20px !important;
     }
     .card-img-top {
-        max-height: 120px; /* Membatasi tinggi gambar */
+        max-height: 180px; /* Membatasi tinggi gambar */
         object-fit: cover; /* Menjaga aspek rasio gambar */
         transition: transform 0.3s ease-in-out;
     }

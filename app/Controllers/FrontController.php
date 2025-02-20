@@ -1,8 +1,9 @@
 <?php
 namespace App\Controllers;
+
 class FrontController extends BaseController
 {
-
+//menangani tampilan setiap halaman tampilan view
    public function dashboard(): string
     {
         return view('index');
@@ -12,34 +13,26 @@ class FrontController extends BaseController
     {
         return view('front/kader/index');
     }
-
-    public function event(string $jenis = 'rutinan'): string
-{
-    $allowedEvents = ['rutinan', 'spesial'];
-
-    if (!in_array($jenis, $allowedEvents)) {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    public function eventRutin(): string
+    {
+        return view('front/event/rutin'); // View untuk event rutin
     }
 
-    return view("front/event/{$jenis}");
-}
-
-public function jejakkabar(string $jenis = 'news'): string
-{
-    $allowedEvents = ['news', 'artikel'];
-
-    if (!in_array($jenis, $allowedEvents)) {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    public function eventSpesial(): string
+    {
+        return view('front/event/spesial'); // View untuk event spesial
     }
 
-    return view("front/jejakkabar/{$jenis}");
+    public function news(): string
+    {
+        return view('front/jejakkabar/news'); // View untuk event spesial
+    }
+
+    public function artikel(): string
+    {
+        return view('front/jejakkabar/artikel'); // View untuk event spesial
+    }
+
 }
 
 
-
-
-
-   
-
-
-}
