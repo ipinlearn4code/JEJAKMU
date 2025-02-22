@@ -22,7 +22,7 @@ class KaderProfileController extends Controller
 
     public function new()
     {
-        return view('kader/index');
+        return view('front/kader/index');
     }
 
 

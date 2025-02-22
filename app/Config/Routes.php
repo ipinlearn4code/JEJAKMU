@@ -25,5 +25,11 @@ $routes->get('/logout', 'AuthController::logout');
 
 
 $routes->resource('kader', ['controller' => 'KaderProfileController']);
+$routes->resource('posts', [
+    'controller' => 'posts',
+    // 'map' => [
+    //     'myCustomAction' => 'myCustomAction'
+    // ]
+]);
 
 

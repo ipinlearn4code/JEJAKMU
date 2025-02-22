@@ -6,7 +6,9 @@ class FrontController extends BaseController
 //menangani tampilan setiap halaman tampilan view
    public function dashboard(): string
     {
-        return view('index');
+        $postController = new PostController();
+        $data= $postController->getLatestPosts();
+        return view('index', $data);
     }
 
     public function daftarkader(): string
