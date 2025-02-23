@@ -1,76 +1,65 @@
 <?php
+
 namespace App\Controllers;
-use App\Models\UserModel; // Pastikan ada model User
-use CodeIgniter\Controller;
+
+use App\Models\UserModel;
 
 class AuthController extends BaseController
 {
-    public function login()
+    public function registerProcess()
     {
-        return view('auth/login'); // Menampilkan halaman login
+        $userModel = new UserModel();
+        $email = $this->request->getPost('email');
+        $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+
+        // Cek apakah email sudah terdaftar
+        if ($userModel->where('email', $email)->first()) {
+            return $this->response->setJSON(['error' => 'Email sudah terdaftar'])->setStatusCode(400);
+        }
+
+        // Simpan user baru tanpa role
+        $userModel->insert([
+            'email' => $email,
+            'password' => $password,
+            'role' => null // Default user tidak memiliki role
+        ]);
+
+        return $this->response->setJSON(['message' => 'Registrasi berhasil, silakan login!']);
     }
 
-    public function doLogin()
+    public function loginProcess()
     {
-        $session = session();
-        $model = new UserModel();
-
+        $userModel = new UserModel();
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
 
-        $user = $model->where('email', $email)->first();
+        $user = $userModel->where('email', $email)->first();
 
-        if ($user) {
-            if (password_verify($password, $user['password_hash'])) {
-                // Simpan data user ke session
-                $session->set([
-                    'user_id' => $user['id'],
-                    'email' => $user['email'],
-                    'isLoggedIn' => true
-                ]);
-                return redirect()->to('/dashboard'); // Arahkan ke dashboard setelah login
-            } else {
-                return redirect()->to('/login')->with('error', 'Password salah!');
-            }
+        // // Cek email dan password
+//if (!$user || md5($password) !== $user['password']) {
+  // return $this->response->setJSON(['error' => 'Email atau password salah'])->setStatusCode(400);
+//}
+
+
+        // Set session
+        session()->set([
+            'user_id' => $user['id'],
+            'email' => $user['email'],
+            'role' => $user['role'], // Bisa null atau 'admin'
+            'logged_in' => true,
+        ]);
+
+        // Redirect berdasarkan role
+        if ($user['role'] === 'superadmin') {
+            return $this->response->setJSON(['redirect' => base_url('/datakader')]);
         } else {
-            return redirect()->to('/login')->with('error', 'Email tidak ditemukan!');
+            return $this->response->setJSON(['redirect' => base_url('/dashboard')]);
         }
     }
-
-    public function regist()
-    {
-        if ($this->request->getMethod() === 'post') {
-            $rules = [
-                'email' => 'required|valid_email|is_unique[users.email]',
-                'username' => 'required|min_length[3]|is_unique[users.username]',
-                'password' => 'required|min_length[6]',
-                'pass_confirm' => 'matches[password]'
-            ];
-
-            if (!$this->validate($rules)) {
-                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-            }
-
-            $model = new UserModel();
-            $data = [
-                'email' => $this->request->getPost('email'),
-                'username' => $this->request->getPost('username'),
-                'password_hash' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-                'role' => 'member'
-            ];
-
-            $model->insert($data);
-
-            return redirect()->to('/login')->with('message', 'Registration successful. Please log in.');
-        }
-
-        return view('auth/regist');
-    }
-
 
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/login');
+        return redirect()->to('/');
     }
 }

@@ -11,22 +11,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="<?php echo base_url('/dashboard'); ?>" class="nav-item nav-link active">Dashboard</a>
-                <a href="<?php echo base_url('/daftarkader'); ?>" class="nav-item nav-link">Daftar Kader</a>
+                <a href="<?php echo base_url('/datakader'); ?>" class="nav-item nav-link active">Data Kader</a>
+               
 
                 <div class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Event</a>
-    <div class="dropdown-menu border-0 m-0">
-        <a href="<?php echo base_url('/eventRutin'); ?>" class="dropdown-item">Rutin</a>
-        <a href="<?php echo base_url('/ eventSpesial'); ?>" class="dropdown-item">Spesial</a>
-    </div>
-</div>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jejak Kabar</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">data event</a>
                     <div class="dropdown-menu border-0 m-0">
-                    <a href="<?php echo base_url('/news'); ?>" class="dropdown-item">News</a>
-                    <a href="<?php echo base_url('/artikel'); ?>" class="dropdown-item">Artikel</a>
+                    <a href="<?php echo base_url('/dataeventspesial'); ?>" class="dropdown-item">Spesial</a>
+                    <a href="<?php echo base_url('/dataeventrutin'); ?>" class="dropdown-item">Rutin</a>
+                    </div>
+                </div>
+
+                 <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">data kabar</a>
+                    <div class="dropdown-menu border-0 m-0">
+                    <a href="<?php echo base_url('/datanews'); ?>" class="dropdown-item">News</a>
+                    <a href="<?php echo base_url('/dataartikel'); ?>" class="dropdown-item">Artikel</a>
                     </div>
                 </div>
                 </div>
@@ -74,10 +74,6 @@
             <div class="modal-body">
                 <form id="registerForm">
                     <div class="mb-3">
-                        <label>Username:</label>
-                        <input type="text" class="form-control" id="registerUsername" name="username" required>
-                    </div>
-                    <div class="mb-3">
                         <label>Email:</label>
                         <input type="email" class="form-control" id="registerEmail" name="email" required>
                     </div>
@@ -114,7 +110,6 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     .catch(error => console.error("Error:", error));
 });
 
-
 document.getElementById("registerForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -127,18 +122,17 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
     .then(response => response.json())
     .then(data => {
         if (data.error) {
-            alert(data.error);
+            alert(data.error); // Menampilkan error jika registrasi gagal
         } else {
             alert("Registrasi berhasil! Silakan login.");
             var registerModal = new bootstrap.Modal(document.getElementById("registerModal"));
-            registerModal.hide();
+            registerModal.hide(); // Menutup modal register
             var loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
-            loginModal.show();
+            loginModal.show(); // Membuka modal login
         }
     })
     .catch(error => console.error("Error:", error));
 });
-
 </script>
 
     </nav>

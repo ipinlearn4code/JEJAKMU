@@ -15,26 +15,32 @@ class CreateKaderProfileTable extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true
             ],
+            'user_id' => [
+                'type'       => 'INT',
+                'constraint' => 11,
+                'unsigned'   => true,
+                'null'       => false
+            ],
             'nik' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 50,
                 'null'       => false
             ],
-            'nama' => [
+            'name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 100,
                 'null'       => false
             ],
-            'alamat' => [
+            'address' => [
                 'type' => 'TEXT',
                 'null' => true
             ],
-            'lulusan' => [
+            'education' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 100,
                 'null'       => true
             ],
-            'keahlian' => [
+            'skills' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => true
@@ -50,11 +56,12 @@ class CreateKaderProfileTable extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->createTable('kader_profile');
+        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('cadre_profiles');
     }
 
     public function down()
     {
-        $this->forge->dropTable('kader_profile');
+        $this->forge->dropTable('cadre_profiles');
     }
 }
